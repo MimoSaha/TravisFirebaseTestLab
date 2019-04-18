@@ -54,6 +54,7 @@ before_script:
   # Add gcloud to $PATH
   - source /home/travis/google-cloud-sdk/path.bash.inc
   - gcloud version
+  - gcloud auth activate-service-account firebase-adminsdk-wbv5k@trafiretestlab.iam.gserviceaccount.com --key-file=trafiretestlab-firebase-adminsdk-wbv5k-4db71c5fa3.json --project=trafiretestlab
 
 script:
   - ./gradlew clean build connectedCheck -PdisablePreDex --stacktrace
