@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "649241652650",
+    "firebase_url": "https://trafiretestlab.firebaseio.com",
+    "project_id": "trafiretestlab",
+    "storage_bucket": "trafiretestlab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:649241652650:android:1358b76c5ea42cd3",
+        "android_client_info": {
+          "package_name": "com.android.travisfirebasetestlab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "649241652650-7g8lf6a0dikojgkeucrgttc4jl28sd7f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.travisfirebasetestlab",
+            "certificate_hash": "deff4299b70606883eac817dbb0efe868c82ef35"
+          }
+        },
+        {
+          "client_id": "649241652650-4sh00m3vejul5i88mbdj38jrnikjm4qu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLByv69RRyajt8NgNKgCiXF0O2njV2_zI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "649241652650-4sh00m3vejul5i88mbdj38jrnikjm4qu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

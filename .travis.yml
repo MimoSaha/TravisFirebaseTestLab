@@ -1,11 +1,20 @@
 language: android
 sudo: required
 jdk: oraclejdk8
+services:
+  - docker
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - "$HOME/.gradle/caches/"
+    - "$HOME/.gradle/wrapper/"
+    - "$HOME/google-cloud-sdk/"
 android:
   components:
     - tools
     - platform-tools
-    - tools
     - build-tools-28.0.3
     - android-28
     - android-22
@@ -16,21 +25,41 @@ android:
     - addon-google_apis-google-25
     - sys-img-armeabi-v7a-android-22
 
-licenses:
-    - 'android-sdk-license-.+'
+  licenses:
+    - android-sdk-preview-license-.+
+    - android-sdk-license-.+
+    - google-gdk-license-.+
 
 before_install:
-  - "chmod +x gradlew"
   - yes | sdkmanager "platforms;android-28"
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+  - chmod +x gradlew
+  - ./gradlew dependencies || true
+  - openssl aes-256-cbc -K $encrypted_c0ab5f6f14bc_key -iv $encrypted_c0ab5f6f14bc_iv -in trafiretestlab-firebase-adminsdk-wbv5k-4db71c5fa3.json.enc -out trafiretestlab-firebase-adminsdk-wbv5k-4db71c5fa3.json -d
+
 # Emulator Management: Create, Start and Wait
 before_script:
-  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+  - android list sdk --extended --no-ui --all
+  - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-22,sys-img-x86_64-android-22
+  - android list targets
+  - echo no | android create avd --force -n test -t android-22 --abi default/armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
+  # gcloud
+  - gcloud version || true
+  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export $CLOUDSDK_CORE_DISABLE_PROMPTS; curl https://sdk.cloud.google.com | bash; fi
+  # Add gcloud to $PATH
+  - source /home/travis/google-cloud-sdk/path.bash.inc
+  - gcloud version
 
 script:
+  - ./gradlew clean build connectedCheck -PdisablePreDex --stacktrace
   - ./gradlew build assembleDebug
+  - gcloud components update
+  - gcloud firebase test android run --app app/build/outputs/apk/debug/app-debug.apk --type=robo --device model=Nexus4,version=19
 
 after_failure:
   # Customize this line, 'android' is the specific app module name of this project. Shows log.
