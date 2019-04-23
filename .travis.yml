@@ -57,7 +57,8 @@ before_script:
   - gcloud auth activate-service-account firebase-adminsdk-wbv5k@trafiretestlab.iam.gserviceaccount.com --key-file=trafiretestlab-firebase-adminsdk-wbv5k-4db71c5fa3.json --project=trafiretestlab
 
 script:
-  - ./gradlew clean build lintDebug
+#  - ./gradlew clean build lintDebug
+  - ./gradlew build assembleAndroidTest
 #  - ./gradlew build lintDebug connectedCheck -PdisablePreDex --stacktrace
 #  - ./gradlew clean build lintDebug coveralls
 #  - ./gradlew build assembleDebug
