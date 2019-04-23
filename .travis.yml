@@ -64,7 +64,8 @@ script:
 #  - ./gradlew build assembleDebug
 #  - ./gradlew build lintDebug coveralls assembleDebug
   - gcloud components update
-  - gcloud firebase test android run --app app/build/outputs/apk/debug/app-debug.apk --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --type instrumentation --device model=A0001,version=22
+  - gcloud firebase test android run --app app/build/outputs/apk/debug/app-debug.apk --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --type instrumentation --device model=A0001,version=22 --environment-variables coverage=true,coverageFile="/sdcard/coverage.ec" --directories-to-pull /sdcard
+  - ./gradlew build coveralls
 #  - gcloud firebase test android run --app app/build/outputs/apk/debug/app-debug.apk --type=robo --device model=Nexus4,version=19
 
 after_failure:
