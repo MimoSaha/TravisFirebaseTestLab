@@ -57,9 +57,10 @@ before_script:
   - gcloud auth activate-service-account firebase-adminsdk-wbv5k@trafiretestlab.iam.gserviceaccount.com --key-file=trafiretestlab-firebase-adminsdk-wbv5k-4db71c5fa3.json --project=trafiretestlab
 
 script:
+  - ./gradlew clean build lintDebug connectedCheck -PdisablePreDex --stacktrace
 #  - ./gradlew clean build lintDebug coveralls
 #  - ./gradlew build assembleDebug
-  - ./gradlew build lintDebug coveralls assembleDebug
+#  - ./gradlew build lintDebug coveralls assembleDebug
   - gcloud components update
   - gcloud firebase test android run --app app/build/outputs/apk/debug/app-debug.apk --type=robo --device model=Nexus4,version=19
 
