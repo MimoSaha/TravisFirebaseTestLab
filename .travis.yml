@@ -58,7 +58,7 @@ before_script:
 
 script:
   - ./gradlew clean build lintDebug coveralls
-  - ./gradlew build assembleDebug
+#  - ./gradlew build assembleDebug
   - gcloud components update
   - gcloud firebase test android run --app app/build/outputs/apk/debug/app-debug.apk --type=robo --device model=Nexus4,version=19
 
