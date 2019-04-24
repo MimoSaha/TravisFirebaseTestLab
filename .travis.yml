@@ -73,6 +73,7 @@ after_success:
   - mkdir firebase
   - gsutil -m cp -r -U "`gsutil ls gs://test-lab-3udbiqpdyp0d0-miwcp7d69v80m | tail -1`*" /root/workspace/firebase/
   - mkdir -p mobile/build/outputs/code-coverage/connected && cp firebase/A0001-22-en_US-portrait/artifacts/coverage.ec mobile/build/outputs/code-coverage/connected/coverage.ec
+  - ./gradlew -PciBuild=true :mobile:jacocoTestReport
   - bash <(curl -s https://codecov.io/bash)
 
 after_failure:
