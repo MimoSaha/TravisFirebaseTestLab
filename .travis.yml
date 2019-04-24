@@ -65,7 +65,7 @@ script:
 #  - ./gradlew build lintDebug coveralls assembleDebug
   - gcloud components update
   - gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/debug/app-debug.apk --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=A0001,version=22,locale=en_US,orientation=portrait --environment-variables coverage=true,coverageFile=/sdcard/tmp/code-coverage/connected/coverage.ec --directories-to-pull=/sdcard/tmp --timeout 20m
-  - ./gradlew connectedCheck
+#  - ./gradlew connectedCheck
 #  - ./gradlew build coveralls
 #  - gcloud firebase test android run --app app/build/outputs/apk/debug/app-debug.apk --type=robo --device model=Nexus4,version=19
 
