@@ -64,9 +64,16 @@ script:
 #  - ./gradlew build assembleDebug
 #  - ./gradlew build lintDebug coveralls assembleDebug
   - gcloud components update
-  - gcloud firebase test android run --app app/build/outputs/apk/debug/app-debug.apk --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --type instrumentation --device model=A0001,version=22 --environment-variables coverage=true,coverageFile="/sdcard/coverage.ec" --directories-to-pull /sdcard
-  - ./gradlew build coveralls
+  - gcloud firebase test android run --type instrumentation --app mobile/build/outputs/apk/debug/mobile-debug.apk --test mobile/build/outputs/apk/androidTest/debug/mobile-debug-androidTest.apk --device model=A0001,version=22,locale=en_US,orientation=portrait --environment-variables coverage=true,coverageFile=/sdcard/tmp/code-coverage/connected/coverage.ec --directories-to-pull=/sdcard/tmp --timeout 20m
+  - ./gradlew connectedCheck
+#  - ./gradlew build coveralls
 #  - gcloud firebase test android run --app app/build/outputs/apk/debug/app-debug.apk --type=robo --device model=Nexus4,version=19
+
+after_success:
+  - mkdir firebase
+  - gsutil -m cp -r -U "`gsutil ls gs://test-lab-3udbiqpdyp0d0-miwcp7d69v80m | tail -1`*" /root/workspace/firebase/
+  - mkdir -p mobile/build/outputs/code-coverage/connected && cp firebase/A0001-22-en_US-portrait/artifacts/coverage.ec mobile/build/outputs/code-coverage/connected/coverage.ec
+  - bash <(curl -s https://codecov.io/bash)
 
 after_failure:
   # Customize this line, 'android' is the specific app module name of this project. Shows log.
